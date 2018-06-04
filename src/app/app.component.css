@@ -1,0 +1,9 @@
+.sidenav {
+  width: 320px;
+}
+
+.contenedor{
+  min-height: 100%;
+  background-color: rgb(255, 255, 100);
+  position: relative;
+}
