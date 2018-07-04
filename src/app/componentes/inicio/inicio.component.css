@@ -1,0 +1,32 @@
+.sidenav {
+  width: 320px;
+}
+
+.contenedorApp {
+  height: 100%;
+  position: relative;
+}
+
+.contenidoApp {
+  height: 100%;
+}
+
+.contenedor {
+  margin: 16px;
+}
+
+.toolbar {
+  margin: 0px;
+  padding: 0px;
+  margin-bottom: 10px;
+}
+
+.titulo {
+  position: absolute;
+  margin-left: 72px;
+}
+
+.material-icons {
+  position: absolute;
+  margin-left: 16px;
+}

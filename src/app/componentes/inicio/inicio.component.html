@@ -1,0 +1,24 @@
+<mat-sidenav-container class="contenedorApp">
+  <mat-sidenav class="sidenav"
+    #sidenav fixedInViewport mode="over">
+      sidenav
+  </mat-sidenav>
+  <mat-sidenav-content class="contenidoApp">
+    <mat-toolbar class="toolbar" color="primary">
+      <i class="material-icons"
+        (click)="sidenav.toggle()">menu
+      </i>
+      <span class="titulo">Examen Universidad</span>
+    </mat-toolbar>
+    <div class="contenedor">
+      <!-- Card Lectura Materias-->
+      <mat-card (click)=estudiar()>
+        <mat-card-content>
+          <p>
+            Estudia
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

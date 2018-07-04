@@ -61,3 +61,19 @@ body {
   height: 100%;
   margin: 0px;
 }
+
+.toolbar {
+  margin: 0px;
+  padding: 0px;
+  margin-bottom: 10px;
+}
+
+toolbarTitulo {
+  position: absolute;
+  margin-left: 72px;
+}
+
+.toolbarIcono {
+  position: absolute;
+  margin-left: 16px;
+}

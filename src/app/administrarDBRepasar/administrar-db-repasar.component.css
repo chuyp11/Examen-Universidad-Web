@@ -1,0 +1,39 @@
+.contenedor {
+  margin: 16px;
+}
+
+.floating-button {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  margin: 16px;
+}
+
+mat-row:hover {
+  background-color: #EEEEEE;
+}
+
+mat-list-item:hover {
+  background-color: #EEEEEE;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+}
+
+.toolbar {
+  padding: 0px;
+}
+
+.toolbarTitulo {
+  margin-left: 72px;
+}
+
+.toolbarIcono {
+  width: 24px;
+  height: 24px;
+  margin-left: 16px;
+  margin-right: 32px;
+}
+
