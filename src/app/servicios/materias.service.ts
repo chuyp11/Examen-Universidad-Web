@@ -13,7 +13,7 @@ export class MateriasService {
   materiaDoc: AngularFirestoreDocument<Materia>;
 
   constructor(private afs: AngularFirestore) {
-    this.materiasCollection = afs.collection<Materia>('materias');
+    this.materiasCollection = afs.collection<Materia>('materias', ref => ref.orderBy('orden'));
     this.materias = this.materiasCollection.valueChanges();
    }
 

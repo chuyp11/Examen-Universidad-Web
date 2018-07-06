@@ -26,6 +26,7 @@ export class SeccionesPanelInferiorComponent {
   seccion: Seccion = {
     id: '',
     nombre: '',
+    orden: 0,
   };
 
   constructor(

@@ -1,10 +1,9 @@
-import { Component, OnInit, OnDestroy  } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { MateriasService } from '../../servicios/materias.service';
 import { AdministrarDBRepasarService } from '../administrar-db-repasar.service';
-import { AppBarSuperiorService } from '../../servicios/app-bar-superior.service';
 
 import { Materia } from '../../modelos/materia';
 
@@ -34,6 +33,10 @@ import { MateriasPanelInferiorComponent } from './materias-panel-inferior.compon
           <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
           <mat-cell *matCellDef="let materia"> {{materia.nombre}} </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="orden">
+          <mat-header-cell *matHeaderCellDef> Orden </mat-header-cell>
+          <mat-cell *matCellDef="let materia"> {{materia.orden}} </mat-cell>
+        </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let materia; columns: displayedColumns;" (click) = mostrarPanelInferior(materia) ></mat-row>
       </mat-table>
@@ -50,7 +53,7 @@ import { MateriasPanelInferiorComponent } from './materias-panel-inferior.compon
 export class MateriasLecturaComponent implements OnInit, OnDestroy  {
 
   materias: Materia[] = [];
-  displayedColumns = ['nombre'];
+  displayedColumns = ['nombre', 'orden'];
   dataSource: any;
 
   suscripcion: any;
@@ -60,9 +63,7 @@ export class MateriasLecturaComponent implements OnInit, OnDestroy  {
     private panelInferioir: MatBottomSheet,
     private servicio: AdministrarDBRepasarService,
     private router: Router,
-    private appBarSuperiorService: AppBarSuperiorService,
     private location: Location) {
-      this.appBarSuperiorService.establecerTitulo('Materias');
       this.lectura();
   }
 
@@ -77,7 +78,8 @@ export class MateriasLecturaComponent implements OnInit, OnDestroy  {
     this.suscripcion = this.materiasService.lectura()
       .subscribe((materias: Materia[]) => {
         this.materias = materias;
-        this.dataSource = new MatTableDataSource(this.materias);
+        this.dataSource = new MatTableDataSource<Materia>(this.materias);
+        this.servicio.establecerCantidadMaterias(this.materias.length);
       });
   }
 

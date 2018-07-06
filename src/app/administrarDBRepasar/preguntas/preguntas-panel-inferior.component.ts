@@ -26,6 +26,7 @@ export class PreguntasPanelInferiorComponent {
   pregunta: Pregunta = {
     id: '',
     nombre: '',
+    orden: 0,
   };
 
   constructor(

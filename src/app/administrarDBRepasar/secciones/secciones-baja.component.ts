@@ -27,10 +27,12 @@ export class SeccionesBajaComponent {
   materia: Materia = {
     id: '',
     nombre: '',
+    orden: 0,
   };
   seccion: Seccion = {
     id: '',
     nombre: '',
+    orden: 0,
   };
 
   constructor(

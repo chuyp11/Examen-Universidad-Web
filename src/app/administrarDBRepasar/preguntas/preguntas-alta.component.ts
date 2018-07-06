@@ -27,6 +27,9 @@ import { Pregunta } from '../../modelos/pregunta';
           <mat-form-field >
             <input matInput placeholder="Nombre" formControlName="nombre">
           </mat-form-field>
+          <mat-form-field >
+            <input matInput placeholder="Orden" formControlName="orden">
+          </mat-form-field>
         </form>
       </mat-card-content>
       <mat-card-actions>
@@ -45,15 +48,19 @@ export class PreguntasAltaComponent implements OnInit {
   materia: Materia = {
     id: '',
     nombre: '',
+    orden: 0,
   };
   seccion: Seccion = {
     id: '',
     nombre: '',
+    orden: 0,
   };
   pregunta: Pregunta = {
     id: '',
     nombre: '',
+    orden: 0,
   };
+  cantidadPreguntas: number;
 
   constructor(
     private pregutasService: PreguntasService,
@@ -62,6 +69,7 @@ export class PreguntasAltaComponent implements OnInit {
     private location: Location ) {
       this.materia = this.servicio.obtenerMateria();
       this.seccion = this.servicio.obtenerSeccion();
+      this.cantidadPreguntas = this.servicio.obtenerCantidadPreguntas();
       this.crearFormulario();
   }
 
@@ -71,11 +79,13 @@ export class PreguntasAltaComponent implements OnInit {
   crearFormulario() {
     this.formulario = this.formBuilder.group({
       nombre: ['', Validators.required],
+      orden: [(this.cantidadPreguntas + 1), Validators.required],
     });
   }
 
   confirmar() {
     this.pregunta.nombre = this.formulario.value.nombre;
+    this.pregunta.orden = +this.formulario.value.orden;
     this.pregutasService.alta(this.materia, this.seccion, this.pregunta);
     this.regresar();
   }

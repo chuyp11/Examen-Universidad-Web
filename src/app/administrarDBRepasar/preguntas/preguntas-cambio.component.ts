@@ -27,6 +27,9 @@ import { Pregunta } from '../../modelos/pregunta';
           <mat-form-field >
             <input matInput placeholder="Nombre" formControlName="nombre">
           </mat-form-field>
+          <mat-form-field >
+            <input matInput placeholder="Orden" formControlName="orden">
+          </mat-form-field>
         </form>
       </mat-card-content>
       <mat-card-actions>
@@ -45,15 +48,24 @@ export class PreguntasCambioComponent implements OnInit {
   materia: Materia = {
     id: '',
     nombre: '',
+    orden: 0,
   };
   seccion: Seccion = {
     id: '',
     nombre: '',
+    orden: 0,
   };
   pregunta: Pregunta = {
     id: '',
     nombre: '',
+    orden: 0,
   };
+  preguntas: Pregunta[] = [];
+
+  ordenAnterioir: number;
+  ordenNuevo: number;
+
+  suscripcion: any;
 
   constructor(
     private pregutasService: PreguntasService,
@@ -71,12 +83,54 @@ export class PreguntasCambioComponent implements OnInit {
 
   crearFormulario() {
     this.formulario = this.formBuilder.group({
-      nombre: [this.pregunta.nombre, Validators.required]
+      nombre: [this.pregunta.nombre, Validators.required],
+      orden: [this.pregunta.orden, Validators.required],
     });
   }
 
   confirmar() {
+    this.ordenAnterioir = this.pregunta.orden;
+    this.ordenNuevo = +this.formulario.value.orden;
+    if (this.ordenAnterioir !== this.ordenNuevo) {
+      if (this.ordenAnterioir > this.ordenNuevo) {
+        const tam = this.ordenAnterioir - this.ordenNuevo;
+        this.suscripcion = this.pregutasService.lectura(this.materia, this.seccion)
+          .subscribe((preguntas: Pregunta[]) => {
+            this.preguntas = preguntas;
+            for (let i = 0; i < tam; i++) {
+              this.preguntas[(this.ordenNuevo - 1)].orden += 1;
+              this.pregutasService.cambio(this.materia, this.seccion, this.preguntas[(this.ordenNuevo - 1)]);
+              this.ordenNuevo += 1;
+              if (i === (tam - 1)) {
+                this.suscripcion.unsubscribe();
+                this.actualizarMateria();
+              }
+            }
+          });
+      } else if (this.ordenAnterioir < this.ordenNuevo) {
+        const tam = this.ordenNuevo - this.ordenAnterioir;
+        this.suscripcion = this.pregutasService.lectura(this.materia, this.seccion)
+          .subscribe((preguntas: Pregunta[]) => {
+            this.preguntas = preguntas;
+            for (let i = 0; i < (tam); i++) {
+              this.preguntas[(this.ordenNuevo - 1)].orden -= 1;
+              this.pregutasService.cambio(this.materia, this.seccion,  this.preguntas[(this.ordenNuevo - 1)]);
+              this.ordenNuevo -= 1;
+              if (i === (tam - 1)) {
+                this.suscripcion.unsubscribe();
+                this.actualizarMateria();
+              }
+            }
+          });
+      }
+    } else {
+      this.actualizarMateria();
+    }
+  }
+
+  actualizarMateria() {
     this.pregunta.nombre = this.formulario.value.nombre;
+    this.pregunta.orden = +this.formulario.value.orden;
     this.pregutasService.cambio(this.materia, this.seccion, this.pregunta);
     this.regresar();
   }

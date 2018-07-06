@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -25,6 +25,9 @@ import { Materia } from '../../modelos/materia';
           <mat-form-field >
             <input matInput placeholder="Nombre" formControlName="nombre">
           </mat-form-field>
+          <mat-form-field >
+            <input matInput placeholder="Orden" formControlName="orden">
+          </mat-form-field>
         </form>
       </mat-card-content>
       <mat-card-actions>
@@ -37,13 +40,21 @@ import { Materia } from '../../modelos/materia';
   `,
   styleUrls: ['../administrar-db-repasar.component.css'],
 })
-export class MateriasCambioComponent implements OnInit {
+export class MateriasCambioComponent implements OnInit, OnDestroy {
 
   formulario: FormGroup;
+
   materia: Materia = {
     id: '',
     nombre: '',
+    orden: 0,
   };
+  materias: Materia[] = [];
+
+  ordenAnterioir: number;
+  ordenNuevo: number;
+
+  suscripcion: any;
 
   constructor(
     private materiasService: MateriasService,
@@ -59,12 +70,54 @@ export class MateriasCambioComponent implements OnInit {
 
   crearFormulario() {
     this.formulario = this.formBuilder.group({
-      nombre: [this.materia.nombre, Validators.required]
+      nombre: [this.materia.nombre, Validators.required],
+      orden: [this.materia.orden, Validators.required],
     });
   }
 
   confirmar() {
+    this.ordenAnterioir = this.materia.orden;
+    this.ordenNuevo = +this.formulario.value.orden;
+    if (this.ordenAnterioir !== this.ordenNuevo) {
+      if (this.ordenAnterioir > this.ordenNuevo) {
+        const tam = this.ordenAnterioir - this.ordenNuevo;
+        this.suscripcion = this.materiasService.lectura()
+          .subscribe((materias: Materia[]) => {
+            this.materias = materias;
+            for (let i = 0; i < tam; i++) {
+              this.materias[(this.ordenNuevo - 1)].orden += 1;
+              this.materiasService.cambio(this.materias[(this.ordenNuevo - 1)]);
+              this.ordenNuevo += 1;
+              if (i === (tam - 1)) {
+                this.suscripcion.unsubscribe();
+                this.actualizarMateria();
+              }
+            }
+          });
+      } else if (this.ordenAnterioir < this.ordenNuevo) {
+        const tam = this.ordenNuevo - this.ordenAnterioir;
+        this.suscripcion = this.materiasService.lectura()
+          .subscribe((materias: Materia[]) => {
+            this.materias = materias;
+            for (let i = 0; i < (tam); i++) {
+              this.materias[(this.ordenNuevo - 1)].orden -= 1;
+              this.materiasService.cambio(this.materias[(this.ordenNuevo - 1)]);
+              this.ordenNuevo -= 1;
+              if (i === (tam - 1)) {
+                this.suscripcion.unsubscribe();
+                this.actualizarMateria();
+              }
+            }
+          });
+      }
+    } else {
+      this.actualizarMateria();
+    }
+  }
+
+  actualizarMateria() {
     this.materia.nombre = this.formulario.value.nombre;
+    this.materia.orden = +this.formulario.value.orden;
     this.materiasService.cambio(this.materia);
     this.regresar();
   }
@@ -75,6 +128,10 @@ export class MateriasCambioComponent implements OnInit {
 
   regresar() {
     this.location.back();
+  }
+
+  ngOnDestroy() {
+    // this.suscripcion.unsubscribe();
   }
 
 }

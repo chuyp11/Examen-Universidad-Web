@@ -26,20 +26,24 @@ import {
 
 import { AppComponent } from './app.component';
 import { ToolbarComponent } from './componentes/toolbar.component';
-
-import { AdministrarDBRepasarModule } from './administrarDBRepasar/administrar-db-repasar.module';
 import { InicioComponent } from './componentes/inicio/inicio.component';
 
+import { AdministrarDBRepasarModule } from './administrarDBRepasar/administrar-db-repasar.module';
+import { PracticarModule } from './practicar/practicar.module';
+
 import { AppRoutingModule } from './app-routing.module';
+import { PruebasComponent } from './componentes/pruebas/pruebas.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ToolbarComponent,
     InicioComponent,
+    PruebasComponent,
   ],
   imports: [
     BrowserModule,
+    PracticarModule,
     AdministrarDBRepasarModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),

@@ -35,6 +35,10 @@ import { PreguntasPanelInferiorComponent } from './preguntas-panel-inferior.comp
           <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
           <mat-cell *matCellDef="let pregunta"> {{pregunta.nombre}} </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="orden">
+          <mat-header-cell *matHeaderCellDef> Orden </mat-header-cell>
+          <mat-cell *matCellDef="let pregunta"> {{pregunta.orden}} </mat-cell>
+        </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let pregunta; columns: displayedColumns;" (click) = mostrarPanelInferior(pregunta) ></mat-row>
       </mat-table>
@@ -51,7 +55,7 @@ import { PreguntasPanelInferiorComponent } from './preguntas-panel-inferior.comp
 export class PreguntasLecturaComponent implements OnInit, OnDestroy  {
 
   preguntas: Pregunta[] = [];
-  displayedColumns = ['nombre'];
+  displayedColumns = ['nombre', 'orden'];
   dataSource: any;
 
   suscripcion: any;
@@ -59,11 +63,13 @@ export class PreguntasLecturaComponent implements OnInit, OnDestroy  {
   materia: Materia = {
     id: '',
     nombre: '',
+    orden: 0,
   };
 
   seccion: Seccion = {
     id: '',
     nombre: '',
+    orden: 0,
   };
 
   constructor(
@@ -89,6 +95,7 @@ export class PreguntasLecturaComponent implements OnInit, OnDestroy  {
       .subscribe((preguntas: Pregunta[]) => {
         this.preguntas = preguntas;
         this.dataSource = new MatTableDataSource(this.preguntas);
+        this.servicio.establecerCantidadPreguntas(this.preguntas.length);
       });
   }
 

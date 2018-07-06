@@ -25,6 +25,7 @@ export class RespuestasPanelInferiorComponent {
   respuesta: Respuesta = {
     id: '',
     nombre: '',
+    orden: 0,
   };
 
   constructor(

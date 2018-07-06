@@ -18,4 +18,12 @@ export class InicioComponent implements OnInit {
     this.router.navigate(['materias']);
   }
 
+  practicar() {
+    this.router.navigate(['seleccionarPracticar']);
+  }
+
+  pruebas() {
+    this.router.navigate(['pruebas']);
+  }
+
 }

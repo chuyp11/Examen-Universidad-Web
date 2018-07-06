@@ -17,7 +17,8 @@ export class PreguntasService {
   constructor(private afs: AngularFirestore) { }
 
   lectura(materia: Materia, seccion: Seccion) {
-    this.preguntasCollection = this.afs.collection<Pregunta>(`materias/${materia.id}/secciones/${seccion.id}/preguntas`);
+    this.preguntasCollection = this.afs.collection<Pregunta>
+      (`materias/${materia.id}/secciones/${seccion.id}/preguntas`, ref => ref.orderBy('orden'));
     this.preguntas = this.preguntasCollection.valueChanges();
     return this.preguntas;
   }

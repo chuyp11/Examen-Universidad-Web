@@ -34,6 +34,10 @@ import { SeccionesPanelInferiorComponent } from './secciones-panel-inferior.comp
           <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
           <mat-cell *matCellDef="let seccion"> {{seccion.nombre}} </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="orden">
+          <mat-header-cell *matHeaderCellDef> Orden </mat-header-cell>
+          <mat-cell *matCellDef="let seccion"> {{seccion.orden}} </mat-cell>
+        </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let seccion; columns: displayedColumns;" (click) = mostrarPanelInferior(seccion) ></mat-row>
       </mat-table>
@@ -50,7 +54,7 @@ import { SeccionesPanelInferiorComponent } from './secciones-panel-inferior.comp
 export class SeccionesLecturaComponent implements OnInit, OnDestroy  {
 
   secciones: Seccion[] = [];
-  displayedColumns = ['nombre'];
+  displayedColumns = ['nombre', 'orden'];
   dataSource: any;
 
   suscripcion: any;
@@ -58,6 +62,7 @@ export class SeccionesLecturaComponent implements OnInit, OnDestroy  {
   materia: Materia = {
     id: '',
     nombre: '',
+    orden: 0,
   };
 
   constructor(
@@ -82,6 +87,7 @@ export class SeccionesLecturaComponent implements OnInit, OnDestroy  {
       .subscribe((secciones: Seccion[]) => {
         this.secciones = secciones;
         this.dataSource = new MatTableDataSource(this.secciones);
+        this.servicio.establecerCantidadSecciones(this.secciones.length);
       });
   }
 

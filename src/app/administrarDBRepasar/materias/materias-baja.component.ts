@@ -26,6 +26,7 @@ export class MateriasBajaComponent {
   materia: Materia = {
     id: '',
     nombre: '',
+    orden: 0,
   };
 
   constructor(

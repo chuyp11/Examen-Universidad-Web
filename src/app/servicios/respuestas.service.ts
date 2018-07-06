@@ -19,7 +19,7 @@ export class RespuestasService {
 
   lectura(materia: Materia, seccion: Seccion, pregunta: Pregunta) {
     this.respuestasCollection = this.afs.collection<Respuesta>
-      (`materias/${materia.id}/secciones/${seccion.id}/preguntas/${pregunta.id}/respuestas`);
+      (`materias/${materia.id}/secciones/${seccion.id}/preguntas/${pregunta.id}/respuestas`, ref => ref.orderBy('orden'));
     this.respuesta = this.respuestasCollection.valueChanges();
     return this.respuesta;
   }

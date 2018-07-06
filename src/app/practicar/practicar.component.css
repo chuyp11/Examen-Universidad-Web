@@ -1,0 +1,20 @@
+.contenedor {
+  margin: 16px;
+}
+
+.toolbar {
+  padding: 0px;
+  margin:0px;
+}
+
+.toolbarTitulo {
+  margin-left: 72px;
+}
+
+.toolbarIcono {
+  width: 24px;
+  height: 24px;
+  margin-left: 16px;
+  margin-right: 32px;
+}
+

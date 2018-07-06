@@ -26,6 +26,7 @@ export class MateriasPanelInferiorComponent {
   materia: Materia = {
     id: '',
     nombre: '',
+    orden: 0,
   };
 
   constructor(

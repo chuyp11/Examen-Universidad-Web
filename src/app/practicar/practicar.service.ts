@@ -7,36 +7,27 @@ import { Respuesta } from '../modelos/respuesta';
 @Injectable({
   providedIn: 'root'
 })
-export class AdministrarDBRepasarService {
+export class PracticarService {
 
   materia: Materia = {
     id: '',
     nombre: '',
-    orden: 0,
   };
 
   seccion: Seccion = {
     id: '',
     nombre: '',
-    orden: 0,
   };
 
   pregunta: Pregunta = {
     id: '',
     nombre: '',
-    orden: 0,
   };
-
   respuesta: Respuesta = {
     id: '',
     nombre: '',
-    orden: 0,
   };
 
-  cantidadMaterias: number;
-  cantidadSecciones: number;
-  cantidadPreguntras: number;
-  cantidadRespuestas: number;
 
   constructor() {
   }
@@ -72,37 +63,4 @@ export class AdministrarDBRepasarService {
   establecerRespuesta(respuesta: Respuesta) {
       this.respuesta = respuesta;
   }
-
-  obtenerCantidadMaterias(): number {
-    return this.cantidadMaterias;
-  }
-
-  establecerCantidadMaterias(cantidad: number) {
-    this.cantidadMaterias = cantidad;
-  }
-
-  obtenerCantidadSecciones(): number {
-    return this.cantidadSecciones;
-  }
-
-  establecerCantidadSecciones(cantidad: number) {
-    this.cantidadSecciones = cantidad;
-  }
-
-  obtenerCantidadPreguntas(): number {
-    return this.cantidadPreguntras;
-  }
-
-  establecerCantidadPreguntas(cantidad: number) {
-    this.cantidadPreguntras = cantidad;
-  }
-
-  obtenerCantidadRespuestas(): number {
-    return this.cantidadRespuestas;
-  }
-
-  establecerCantidadRespuestas(cantidad: number) {
-    this.cantidadRespuestas = cantidad;
-  }
-
 }

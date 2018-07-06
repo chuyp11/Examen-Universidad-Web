@@ -29,18 +29,22 @@ export class RespuestasBajaComponent {
   materia: Materia = {
     id: '',
     nombre: '',
+    orden: 0,
   };
   seccion: Seccion = {
     id: '',
     nombre: '',
+    orden: 0,
   };
   pregunta: Pregunta = {
     id: '',
     nombre: '',
+    orden: 0,
   };
   respuesta: Respuesta = {
     id: '',
     nombre: '',
+    orden: 0,
   };
 
   constructor(
